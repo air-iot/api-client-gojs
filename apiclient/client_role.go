@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/air-iot/api-client-gojs/utils"
+	"github.com/air-iot/api-client-gojs/v4/utils"
 	"github.com/air-iot/gojs"
 	"github.com/dop251/goja"
 )
