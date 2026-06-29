@@ -1,4 +1,4 @@
-module github.com/air-iot/api-client-gojs
+module github.com/air-iot/api-client-gojs/v4
 
 go 1.25.0
 
