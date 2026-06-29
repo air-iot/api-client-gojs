@@ -6,59 +6,68 @@
 package main
 
 import (
-    "github.com/dop251/goja"
-    apiclient "github.com/air-iot/api-client-go/v4"
-    "github.com/air-iot/api-client-go/v4/config"
-    "github.com/air-iot/service/v4/etcd"
+	apiclient "github.com/air-iot/api-client-go/v4"
+	jsclient "github.com/air-iot/api-client-go/v4/apiclient"
+	"github.com/air-iot/api-client-go/v4/config"
+	"github.com/air-iot/service/v4/etcd"
+	"github.com/dop251/goja"
 )
 
 etcdCli, _, err := etcd.New(etcd.Config{
-		Endpoints:        []string{"http://127.0.0.1:2379"},
-		DialTimeout:      10,
-		Username:         "root",
-		Password:         "abc123456",
-		AutoSyncInterval: 0,
-	})
-	if err != nil {
-		panic(fmt.Errorf("failed to create etcd client: %v", err))
-	}
+    Endpoints:        []string{"http://127.0.0.1:2379"},
+    DialTimeout:      10,
+    Username:         "root",
+    Password:         "abc123456",
+    AutoSyncInterval: 0,
+})
+if err != nil {
+    panic(fmt.Errorf("failed to create etcd client: %v", err))
+}
 
-	cli, _, err = apiclient.NewClient(etcdCli, config.Config{
-		LiteMode:        false,
-		Gateway:         "",
-		GatewayGrpc:     "",
-		EtcdConfig:      "/config/pro.json",
-		Metadata:        nil,
-		Services:        nil,
-		Type:            "",
-		ProjectId:       "",
-		AK:              "",
-		SK:              "",
-		Timeout:         0,
-		KeepAlive:       false,
-		MaxIdleConns:    0,
-		IdleConnTimeout: 0,
-		Limit:           0,
-		Debug:           true,
-		Service: struct {
-			Expire time.Duration `json:"expire"`
-		}{},
-		ExpirePrecision: 0,
-	})
+cli, _, err = apiclient.NewClient(etcdCli, config.Config{
+    LiteMode:        false,
+    Gateway:         "",
+    GatewayGrpc:     "",
+    EtcdConfig:      "/config/pro.json",
+    Metadata:        nil,
+    Services:        nil,
+    Type:            "",
+    ProjectId:       "",
+    AK:              "",
+    SK:              "",
+    Timeout:         0,
+    KeepAlive:       false,
+    MaxIdleConns:    0,
+    IdleConnTimeout: 0,
+    Limit:           0,
+    Debug:           true,
+    Service: struct {
+        Expire time.Duration `json:"expire"`
+    }{},
+    ExpirePrecision: 0,
+})
 
 vm := goja.New()
-client := NewClient(cli)
+client := jsclient.NewClient(cli)
 
 // 创建通用客户端. 该客户端的所有接口方法都需要传 '项目ID'
 // 例如: projectJsClient.GetTableData("default", "student", "张三");
-jsClient := client.CreateJsClient(vm)
+
+if jsClient, err := client.CreateJsClient(vm); err == nil {
+    vm.Set("apiClient", jsClient)
+} else {
+    panic(fmt.Errorf("创建 js 客户端失败, %+v", err))
+}
 
 // 创建项目客户端. 该客户端调用接口时不用传 '项目ID'
 // 例如: projectJsClient.GetTableData("student", "张三");
-projectJsClient := client.CreateProjectJsClient("default", vm)
-
-vm.Set("apiClient", jsClient)
+if projectJsClient, err := client.CreateProjectJsClient("default", vm); err == nil {
+    vm.Set("apiClient", jsClient)
+} else {
+    panic(fmt.Errorf("创建 js 客户端失败, %+v", err))
+}
 ```
+
 在 js 脚本使用方式如下:
 
 ```js
