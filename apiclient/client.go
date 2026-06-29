@@ -24,7 +24,7 @@ func NewClient(cli *apiclient.Client) *Client {
 //
 // vm := goja.New()
 //
-// client := NewTableDataClient(cli)
+// client := NewClient(cli)
 //
 // jsClient := client.CreateJsClient(vm)
 //

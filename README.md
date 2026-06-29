@@ -47,7 +47,7 @@ etcdCli, _, err := etcd.New(etcd.Config{
 	})
 
 vm := goja.New()
-client := NewTableDataClient(cli)
+client := NewClient(cli)
 
 // 创建通用客户端. 该客户端的所有接口方法都需要传 '项目ID'
 // 例如: projectJsClient.GetTableData("default", "student", "张三");
