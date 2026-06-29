@@ -139,11 +139,12 @@ interface Client {
      * 
      * @param projectId 项目ID
      * @param tableId 表标识
+     * @param tableDataId 表记录ID
      * @param rowData 表记录数据
      * @param closeRequire 是否关闭必填校验
      * @constructor
      */
-    UpdateTableData(projectId: string, tableId: string, rowData: any, closeRequire?: boolean): Result;
+    UpdateTableData(projectId: string, tableId: string, tableDataId: string, rowData: any, closeRequire?: boolean): Result;
     
     /**
      * 批量更新表记录数据
@@ -233,5 +234,15 @@ interface Client {
      * @constructor
      */
     QueryRole(projectId: string, query: Record<string, any>):Result;
+    
+    /**
+     * 调用数据接口
+     * 
+     * @param projectId 项目ID
+     * @param dsId 数据接口标识
+     * @param params 接口参数
+     * @constructor
+     */
+    CallDataInterface(projectId: string, dsId: string, params: any): Result;
 }
 ```
