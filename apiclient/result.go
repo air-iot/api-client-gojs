@@ -1,8 +1,6 @@
 package apiclient
 
 import (
-	"fmt"
-
 	"github.com/dop251/goja"
 )
 
@@ -38,11 +36,5 @@ func (r *Result) ToObject(vm *goja.Runtime) *goja.Object {
 	if r.Count != nil {
 		_ = obj.Set("count", r.Count)
 	}
-	_ = obj.Set("unwrap", func() (goja.Value, error) {
-		if r.Success {
-			return vm.ToValue(r.Data), nil
-		}
-		return goja.Undefined(), fmt.Errorf("%s", r.Message)
-	})
 	return obj
 }

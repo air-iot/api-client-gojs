@@ -22,13 +22,18 @@ func TestGetTableData(t *testing.T) {
 		t.Fatalf("Set err: %v", err)
 	}
 
-	_, err = vm.RunScript("testGetTableData1", `
+	result, err := vm.RunScript("testGetTableData1", `function handler(){
 	const result1 = jsClient.GetTableData("default", "detect_history", "6971f7a08e8e1354fa21299a");
 	console.log("result1:", JSON.stringify(result1));
+	return result1;
+}
+handler()
 `)
 
 	if err != nil {
 		t.Fatalf("RunScript err: %v", err)
+	} else {
+		t.Logf("RunScript result: %v", result.Export())
 	}
 
 	_, err = vm.RunScript("testGetTableData2", `
