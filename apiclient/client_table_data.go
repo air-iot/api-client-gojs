@@ -2,6 +2,7 @@ package apiclient
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/air-iot/api-client-gojs/v4/utils"
@@ -356,6 +357,9 @@ func (a Client) DeleteManyTableData(ctx context.Context, vm *goja.Runtime, proje
 func ToFailureResult(err error) *Result {
 	var responseErr *errors.ResponseError
 	if errors.As(err, &responseErr) {
+		if responseErr.ERR != nil {
+			return Failure(fmt.Sprintf("%s, %s", responseErr.Message, responseErr.ERR))
+		}
 		return Failure(responseErr.Message)
 	}
 	return Failure(err.Error())
