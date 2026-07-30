@@ -146,7 +146,7 @@ func (a Client) CreateSystemVariable(ctx context.Context, vm *goja.Runtime, proj
 		return Failure("variable 有是有效的对象").ToObject(vm)
 	}
 
-	var result InsertsResult
+	var result map[string]any
 	if err := a.cli.CreateSystemVariable(ctx, projectId, variable.Export(), &result); err != nil {
 		return Failure(fmt.Sprintf("调用数据接口失败, %+v", err)).ToObject(vm)
 	}
