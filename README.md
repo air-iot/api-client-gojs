@@ -287,6 +287,7 @@ interface Client {
      * @param projectId 项目ID
      * @param variable 系统变量数据
      * @constructor
+     * @return 新增的系统变量数据. 例如: {"id": "6a6aa8b198a2fc66f4c7ace7", "name": "a", "type": "number", "uid": "a", "value": 2}
      */
     CreateSystemVariable(projectId: string, variable: any): Result;
     
