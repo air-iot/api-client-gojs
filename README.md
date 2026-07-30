@@ -244,5 +244,79 @@ interface Client {
      * @constructor
      */
     CallDataInterface(projectId: string, dsId: string, params: any): Result;
+    
+    /**
+     * 根据系统变量ID查询系统变量
+     *
+     * @param projectId 项目ID
+     * @param varId 系统变量ID
+     * @constructor
+     */
+    GetSystemVariable(projectId: string, varId: string): Result;
+
+    /**
+     * 根据系统变量名称查询系统变量
+     *
+     * @param projectId 项目ID
+     * @param varName 系统变量名称
+     * @constructor
+     */
+    GetSystemVariableByName(projectId: string, varName: string): Result;
+    
+    /**
+     * 根据系统变量 uid 查询系统变量
+     *
+     * @param projectId 项目ID
+     * @param varUid 系统变量 uid
+     * @constructor
+     */
+    GetSystemVariableByUid(projectId: string, varUid: string): Result;
+    
+    /**
+     * 自定义查询系统变量
+     *
+     * @param projectId 项目ID
+     * @param query 查询参数
+     * @constructor
+     */
+    QuerySystemVariable(projectId: string, query: any): Result;
+    
+    /**
+     * 新增系统变量
+     *
+     * @param projectId 项目ID
+     * @param variable 系统变量数据
+     * @constructor
+     */
+    CreateSystemVariable(projectId: string, variable: any): Result;
+    
+    /**
+     * 修改系统变量
+     *
+     * @param projectId 项目ID
+     * @param varId 系统变量ID
+     * @param variable 系统变量数据
+     * @constructor
+     */
+    UpdateSystemVariable(projectId: string, varId: string, variable: any): Result;
+    
+    /**
+     * 替换系统变量
+     *
+     * @param projectId 项目ID
+     * @param varId 系统变量ID
+     * @param variable 系统变量数据
+     * @constructor
+     */
+    ReplaceSystemVariable(projectId: string, varId: string, variable: any): Result;
+    
+    /**
+     * 删除系统变量
+     *
+     * @param projectId 项目ID
+     * @param varId 系统变量ID
+     * @constructor
+     */
+    DeleteSystemVariable(projectId: string, varId: string): Result;
 }
 ```
