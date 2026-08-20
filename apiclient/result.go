@@ -1,6 +1,11 @@
 package apiclient
 
 import (
+	"encoding/json"
+
+	"github.com/air-iot/api-client-go/v4/api"
+	internalError "github.com/air-iot/api-client-go/v4/errors"
+	"github.com/air-iot/errors"
 	"github.com/dop251/goja"
 )
 
@@ -37,4 +42,19 @@ func (r *Result) ToObject(vm *goja.Runtime) *goja.Object {
 		_ = obj.Set("count", r.Count)
 	}
 	return obj
+}
+
+func ParseRes(err error, res *api.Response, result any) ([]byte, error) {
+	if err != nil {
+		return nil, errors.NewResErrorMsg(err, "请求错误")
+	}
+	if !res.GetStatus() {
+		return nil, internalError.ParseResponse(res)
+	}
+	if result != nil && res.GetResult() != nil {
+		if err := json.Unmarshal(res.GetResult(), result); err != nil {
+			return nil, errors.Wrap(err, "解析请求结果错误")
+		}
+	}
+	return res.GetResult(), nil
 }

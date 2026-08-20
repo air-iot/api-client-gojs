@@ -173,6 +173,42 @@ func (a Client) AttachJsClient(vm *goja.Runtime, jsClient *goja.Object) error {
 		}
 	}
 
+	{
+		if err := jsClient.DefineDataProperty("QueryTagLatest", vm.ToValue(func(projectId, tableId, deviceId string, tags goja.Value) goja.Value {
+			return a.QueryTagLatest(context.Background(), vm, projectId, tableId, deviceId, tags)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'QueryTagLatest' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("QueryTagHistory", vm.ToValue(func(projectId string, query goja.Value) goja.Value {
+			return a.QueryTagHistory(context.Background(), vm, projectId, query)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'QueryTagHistory' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("SaveHistory", vm.ToValue(func(projectId string, data goja.Value) goja.Value {
+			return a.SaveHistory(context.Background(), vm, projectId, data)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'SaveHistory' 方法失败, %+v", err)
+		}
+	}
+
+	{
+		if err := jsClient.DefineDataProperty("CreateWarning", vm.ToValue(func(projectId string, warning goja.Value) goja.Value {
+			return a.CreateWarning(context.Background(), vm, projectId, warning)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'CreateWarning' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("GetWarning", vm.ToValue(func(projectId, warningId string, archive bool) goja.Value {
+			return a.GetWarning(context.Background(), vm, projectId, warningId, archive)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'GetWarning' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("QueryWarning", vm.ToValue(func(projectId string, query goja.Value, archive bool) goja.Value {
+			return a.QueryWarning(context.Background(), vm, projectId, query, archive)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'QueryWarning' 方法失败, %+v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -268,6 +304,42 @@ func (a Client) AttachProjectJsClient(projectId string, vm *goja.Runtime, jsClie
 			return a.CallDataInterface(context.Background(), vm, projectId, dsId, params)
 		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
 			return fmt.Errorf("注册 'CallDataInterface' 方法失败, %+v", err)
+		}
+	}
+
+	{
+		if err := jsClient.DefineDataProperty("QueryTagLatest", vm.ToValue(func(tableId, deviceId string, tags goja.Value) goja.Value {
+			return a.QueryTagLatest(context.Background(), vm, projectId, tableId, deviceId, tags)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'QueryTagLatest' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("QueryTagHistory", vm.ToValue(func(query goja.Value) goja.Value {
+			return a.QueryTagHistory(context.Background(), vm, projectId, query)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'QueryTagHistory' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("SaveHistory", vm.ToValue(func(data goja.Value) goja.Value {
+			return a.SaveHistory(context.Background(), vm, projectId, data)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'SaveHistory' 方法失败, %+v", err)
+		}
+	}
+
+	{
+		if err := jsClient.DefineDataProperty("CreateWarning", vm.ToValue(func(warning goja.Value) goja.Value {
+			return a.CreateWarning(context.Background(), vm, projectId, warning)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'CreateWarning' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("GetWarning", vm.ToValue(func(warningId string, archive bool) goja.Value {
+			return a.GetWarning(context.Background(), vm, projectId, warningId, archive)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'GetWarning' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("QueryWarning", vm.ToValue(func(query goja.Value, archive bool) goja.Value {
+			return a.QueryWarning(context.Background(), vm, projectId, query, archive)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'QueryWarning' 方法失败, %+v", err)
 		}
 	}
 

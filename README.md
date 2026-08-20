@@ -319,5 +319,64 @@ interface Client {
      * @constructor
      */
     DeleteSystemVariable(projectId: string, varId: string): Result;
+
+
+    /**
+     * 查询数据点的最新数据
+     * 
+     * @param projectId 项目ID
+     * @param tableId 表标识
+     * @param tableDataId 设备编号
+     * @param tags 数据点. 类型为 string 时表示查询单个数据点的数据, 类型为 string[] 时表示查询多个数据点的数据, 为 true 时表示查询该设备下所有数据点的数据.
+     * @constructor
+     */
+    QueryTagLatest(projectId: string, tableId: string, tableDataId: string, tags: string | string[] | true): Result;
+
+    /**
+     * 查询数据点历史数据
+     * 
+     * @param projectId 项目ID
+     * @param query 查询参数
+     * @constructor
+     */
+    QueryTagHistory(projectId: string, query: any): Result;
+    
+    /**
+     * 写历史数据
+     * 
+     * @param projectId 项目ID
+     * @param data 历史数据. 对象或数组. 例如: {"tableId": "表标识", "tableDataId": "设备编号", "time": 1786501482535, "fields": {"A": 1, "B": true, "C": "c", "D": 1.24}}
+     * @constructor
+     */
+    SaveHistory(projectId: string, data: any | Array<any>): Result;
+    
+    /**
+     * 新增报警记录
+     * 
+     * @param projectId 项目ID
+     * @param warning 报警数据. 对象或数组.
+     * @constructor
+     */
+    CreateWarning(projectId: string, warning: any | Array<any>): Result;
+
+    /**
+     * 根据ID查询报警记录
+     * 
+     * @param projectId 项目ID
+     * @param warningId 报警记录ID
+     * @param archive 是否查询归档数据
+     * @constructor
+     */
+    GetWarning(projectId: string, warningId: string, archive?: boolean): Result;
+    
+    /**
+     * 查询报警记录
+     * 
+     * @param projectId 项目ID
+     * @param query 查询参数
+     * @param archive 是否查询归档数据
+     * @constructor
+     */
+    QueryWarning(projectId: string, query: any, archive?: boolean): Result;
 }
 ```
