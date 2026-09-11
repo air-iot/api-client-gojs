@@ -308,6 +308,49 @@ func (a Client) AttachProjectJsClient(projectId string, vm *goja.Runtime, jsClie
 	}
 
 	{
+		if err := jsClient.DefineDataProperty("GetSystemVariable", vm.ToValue(func(varId string) goja.Value {
+			return a.GetSystemVariable(context.Background(), vm, projectId, varId)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'GetSystemVariable' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("GetSystemVariableByName", vm.ToValue(func(varName string) goja.Value {
+			return a.GetSystemVariableByName(context.Background(), vm, projectId, varName)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'GetSystemVariableByName' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("GetSystemVariableByUid", vm.ToValue(func(varUid string) goja.Value {
+			return a.GetSystemVariableByUid(context.Background(), vm, projectId, varUid)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'GetSystemVariableByUid' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("QuerySystemVariable", vm.ToValue(func(query goja.Value) goja.Value {
+			return a.QuerySystemVariable(context.Background(), vm, projectId, query)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'QuerySystemVariable' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("CreateSystemVariable", vm.ToValue(func(query goja.Value) goja.Value {
+			return a.CreateSystemVariable(context.Background(), vm, projectId, query)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'CreateSystemVariable' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("UpdateSystemVariable", vm.ToValue(func(varId string, variable goja.Value) goja.Value {
+			return a.UpdateSystemVariable(context.Background(), vm, projectId, varId, variable)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'UpdateSystemVariable' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("ReplaceSystemVariable", vm.ToValue(func(varId string, variable goja.Value) goja.Value {
+			return a.ReplaceSystemVariable(context.Background(), vm, projectId, varId, variable)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'ReplaceSystemVariable' 方法失败, %+v", err)
+		}
+		if err := jsClient.DefineDataProperty("DeleteSystemVariable", vm.ToValue(func(varId string) goja.Value {
+			return a.DeleteSystemVariable(context.Background(), vm, projectId, varId)
+		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {
+			return fmt.Errorf("注册 'DeleteSystemVariable' 方法失败, %+v", err)
+		}
+	}
+
+	{
 		if err := jsClient.DefineDataProperty("QueryTagLatest", vm.ToValue(func(tableId, deviceId string, tags goja.Value) goja.Value {
 			return a.QueryTagLatest(context.Background(), vm, projectId, tableId, deviceId, tags)
 		}), goja.FLAG_FALSE, goja.FLAG_FALSE, goja.FLAG_FALSE); err != nil {

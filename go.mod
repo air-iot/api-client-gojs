@@ -8,6 +8,7 @@ require (
 	github.com/air-iot/gojs v0.0.17
 	github.com/air-iot/service/v4 v4.0.0
 	github.com/dop251/goja v0.0.0-20260618133527-c9b2ea77db59
+	github.com/go-kratos/kratos/v2 v2.9.2
 )
 
 require (
@@ -23,7 +24,6 @@ require (
 	github.com/go-kratos/aegis v0.2.0 // indirect
 	github.com/go-kratos/kratos/contrib/config/etcd/v2 v2.0.0-20260310032732-f85662384a8c // indirect
 	github.com/go-kratos/kratos/contrib/registry/etcd/v2 v2.0.0-20260310032732-f85662384a8c // indirect
-	github.com/go-kratos/kratos/v2 v2.9.2 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-playground/form/v4 v4.3.0 // indirect
